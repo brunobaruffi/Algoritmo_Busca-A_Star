@@ -6,7 +6,7 @@ corpo = [  # 0,1,2,3,4,5,6,7
             [1,1,1,1,1,1,1,1]  # 3
         ]
 
-
+  
 #indica o ponto de partida do vetor
 xinicio = 0
 xfinal  = 0
@@ -34,7 +34,7 @@ class buscar_labirinto:
 
 
     def verVizinhos(self):
-        #print (self.fimx)
+        print (self.fimx)
 
 
 
