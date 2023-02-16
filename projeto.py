@@ -1,25 +1,3 @@
-#Vetor corpo composto pela distancia e um vetor dos vizinhos.
-corpo = [  # 0,1,2,3,4,5,6,7
-            [1,1,1,1,0,1,1,1], # 0
-            [1,0,0,0,0,1,1,1], # 1
-            [1,1,1,1,0,1,1,1], # 2
-            [1,1,1,1,1,1,1,1]  # 3
-        ]
-
-  
-#indica o ponto de partida do vetor
-xinicio = 0
-xfinal  = 0
-yinicio = 7
-yfinal  = 0
-#indica o ponto final de chegada
-final = 11
-
-#seta a variavel de controle de posiçao atual
-#posicao = inicio
-
-#roda ate que a posiçao de controle chegar a ser igual a posiçao final.
-
 
 class buscar_labirinto:
     
@@ -29,18 +7,40 @@ class buscar_labirinto:
         self.inicioy = inicio[1]
         self.fimx = fim[0]
         self.fimy = fim[1]
+        self.vetorFechado
+        self.vetorAberto
+        
 
 
 
 
-    def verVizinhos(self):
+    def verVizinhos(self, x, y):
+        #if(self.corpo[x+1,y])
         print (self.fimx)
 
+    #def verificarVetorAberto(x,y):
+        
 
 
-chamada = buscar_labirinto(corpo, [0,0], [7,0])
+
+#-------------------corpo principal!-----------------------------
+
+#Vetor corpo composto pela distancia e um vetor dos vizinhos.
+corpo = [  # 0,1,2,3,4,5,6,7
+            [1,1,1,1,0,1,1,1], # 0
+            [1,0,0,0,0,1,1,1], # 1
+            [1,1,1,1,0,1,1,1], # 2
+            [1,1,1,1,1,1,1,1]  # 3
+        ]
+#indica o ponto de partida do vetor
+inicio = [0,0]
+#indica o ponto final de chegada
+final = [7,0]
+
+
+chamada = buscar_labirinto(corpo, inicio, final)
                            
-chamada.verVizinhos()
+
 
 
 
