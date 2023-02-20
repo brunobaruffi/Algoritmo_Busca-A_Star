@@ -1,3 +1,4 @@
+import math
 
 class buscar_labirinto:
     
@@ -86,6 +87,15 @@ class buscar_labirinto:
                 return True
         return False 
     
+    def verificarDistanciaXY(self,x0,y0,x,y):
+        #Calcula a distancia euclidiana entre duas coordenadas,
+        #utilizando a formula de pitagoras.
+        dist = math.sqrt(
+            round(
+                math.fabs(math.pow(x-x0,2))) + 
+            round(math.fabs(math.pow(y-y0,2)))
+            )
+        return dist
 
 
 #-------------------corpo principal!-----------------------------
@@ -107,9 +117,9 @@ final = [0,7]
 
 chamada = buscar_labirinto(corpo, inicio, final, tamanho)
 
-print(chamada.verNovosVizinhos(2, 3))
+#print(chamada.verNovosVizinhos(2, 3))
 
-
+#print(chamada.verificarDistanciaXY(0, 0, 3, 4))
 
 
 
