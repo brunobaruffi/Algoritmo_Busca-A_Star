@@ -13,7 +13,7 @@ class buscar_labirinto:
         self.vetorFechado = []
         self.vetorAberto = []
                 
-        #self.vetorAberto.append([3,2,1,12])
+        #self.vetorAberto.append([3,2,1,2])
         #self.vetorFechado.append([2,2,1,12])
 
 
@@ -91,13 +91,81 @@ class buscar_labirinto:
         #Calcula a distancia euclidiana entre duas coordenadas,
         #utilizando a formula de pitagoras.
         dist = math.sqrt(
-            round(
-                math.fabs(math.pow(x-x0,2))) + 
-            round(math.fabs(math.pow(y-y0,2)))
+                math.fabs(math.pow(x-x0,2)) + 
+            math.fabs(math.pow(y-y0,2))
             )
-        return dist
+        return round(dist,3)
 
-
+    def avaliarVizinhosEVetorAbarto(self, vizinhos, posisaoVetorFechado):
+        Controle = 999999
+        semVizinho = False
+        vetorControle = []
+        posControle = 0
+        #Rodar todos os vizinhos enviados, adicionar no vetorControle 
+        #validando a distanca.
+        c=0
+        for i in vizinhos:
+            tempDistancia = self.verificarDistanciaXY(i[0],i[1],self.fimx,self.fimy)
+            vetorControle.append([i[0],i[1],posisaoVetorFechado,tempDistancia])
+            
+            if (c == 0):
+               Controle = tempDistancia
+            else:
+                if(tempDistancia<Controle):
+                    Controle = tempDistancia
+                    posControle = c
+            c = c + 1
+        #Validando o vetorAberto, buscando o mais proximo deles
+        c=0
+        for i in self.vetorAberto:
+            if (i[3] < Controle):
+                semVizinho = True
+                Controle = i[3]
+                posControle = c
+            c = c + 1 
+        
+        #print(posControle)
+        #print(semVizinho)
+        #print(Controle)
+        
+        addVetorFechado = []
+        if(semVizinho == True):
+            addVetorFechado.append(self.vetorAberto[posControle])
+            del self.vetorAberto[posControle]
+        else:
+            addVetorFechado.append(vetorControle[posControle])
+            del vetorControle[posControle]
+            
+        self.vetorFechado.append(addVetorFechado[0])
+        for i in vetorControle:
+            self.vetorAberto.append(i)
+            
+        #print(self.vetorFechado)
+        #print(self.vetorAberto)        
+        
+           
+    def buscarCaminho(self):
+        self.vetorFechado.append([self.iniciox, self.inicioy, 0, self.verificarDistanciaXY(self.iniciox, self.inicioy, self.fimx, self.fimy)])
+        saida = 0
+        while saida == 0:
+            if (self.vetorFechado == 0):
+                saida = 1
+            else:
+                x = self.vetorFechado[-1][0]
+                y = self.vetorFechado[-1][1]
+                posisaoVetorFechado = len(self.vetorFechado) - 1
+                vizinhos = self.verNovosVizinhos(x, y)
+                
+                self.avaliarVizinhosEVetorAbarto(vizinhos,posisaoVetorFechado)
+                
+                if(self.vetorFechado[-1][3] > 0):
+                    saida = 0
+                else:
+                    saida = 1
+                
+        #print(self.vetorFechado)
+        #print(self.vetorAberto)
+        
 #-------------------corpo principal!-----------------------------
 
 #Vetor corpo composto pela distancia e um vetor dos vizinhos.
@@ -121,31 +189,4 @@ chamada = buscar_labirinto(corpo, inicio, final, tamanho)
 
 #print(chamada.verificarDistanciaXY(0, 0, 3, 4))
 
-
-
-
-
-
-
-
-
-
-
-
-
-#while posicao != final:
- 
-
-
-
-#for d in range(len(corpo)):
- #   print(corpo[d])
-  #  pass
-
-
-
-#for c in corpo:
-    #print(c)    
- #   pass
-    
-
+chamada.buscarCaminho()
