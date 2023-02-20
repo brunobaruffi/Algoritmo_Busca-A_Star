@@ -26,60 +26,49 @@ class buscar_labirinto:
             if(self.corpo[x+1][y-1] == 1):               
                 if (self.verificarExistenciaVetorAberto(x+1, y-1) == False):
                     if(self.verificarExistenciaVetorFechado(x+1, y-1) == False):
-                        saida.append([x+1,y-1])
-                        print("x+1,y-1")
-                      
+                        saida.append([x+1,y-1])                     
         #x+1,y
         if ((x+1 <= self.tamanhoX)):
             if(self.corpo[x+1][y] == 1):
                 if (self.verificarExistenciaVetorAberto(x+1, y) == False):
                     if(self.verificarExistenciaVetorFechado(x+1, y) == False):
                         saida.append([x+1,y])
-                        print("x+1,y")
         #x+1,y+1
         if ((y+1 <=self.tamanhoY) and (x+1 <= self.tamanhoX)):
             if(self.corpo[x+1][y+1] == 1):
                 if (self.verificarExistenciaVetorAberto(x+1, y+1) == False):
                     if(self.verificarExistenciaVetorFechado(x+1, y+1) == False):
-                        saida.append([x+1,y+1])
-                        print("x+1,y+1")
-        
+                        saida.append([x+1,y+1])       
         #x,y+1
         if ((y+1 <=self.tamanhoY)):
             if(self.corpo[x][y+1] == 1):
                 if (self.verificarExistenciaVetorAberto(x, y+1) == False):
                     if(self.verificarExistenciaVetorFechado(x, y+1) == False):
                         saida.append([x,y+1])
-                        print("x,y+1")
         #x,y-1
         if ((y-1 >=0)):
             if(self.corpo[x][y-1] == 1):
                 if (self.verificarExistenciaVetorAberto(x, y-1) == False):
                     if(self.verificarExistenciaVetorFechado(x, y-1) == False):
-                        saida.append([x,y-1])
-                        print("x,y-1")
-        
+                        saida.append([x,y-1])       
         #x-1,y-1
         if ((y-1 >= 0) and (x-1 >= 0)):
             if(self.corpo[x-1][y-1] == 1):
                 if (self.verificarExistenciaVetorAberto(x-1, y-1) == False):
                     if(self.verificarExistenciaVetorFechado(x-1, y-1) == False):
                         saida.append([x-1,y-1])
-                        print("x-1,y-1")
         #x-1,y
         if ((x-1 >= 0)):
             if(self.corpo[x-1][y] == 1):
                 if (self.verificarExistenciaVetorAberto(x-1, y) == False):
                     if(self.verificarExistenciaVetorFechado(x-1, y) == False):
                         saida.append([x-1,y])
-                        print("x-1,y")
         #x-1,y+1
         if ((y+1 <= self.tamanhoY) and (x-1 >= 0)):
             if(self.corpo[x-1][y+1] == 1):
                 if (self.verificarExistenciaVetorAberto(x-1, y+1) == False):
                     if(self.verificarExistenciaVetorFechado(x-1, y+1) == False):
                         saida.append([x-1,y+1])
-                        print("x-1,y+1")
                       
         return saida
 
