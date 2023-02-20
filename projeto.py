@@ -7,20 +7,43 @@ class buscar_labirinto:
         self.inicioy = inicio[1]
         self.fimx = fim[0]
         self.fimy = fim[1]
-        self.vetorFechado
-        self.vetorAberto
+        self.vetorFechado = []
+        self.vetorAberto = []
         
 
 
 
 
-    def verVizinhos(self, x, y):
+    def verNovosVizinhos(self, x, y):
+        #x+1,y-1
+        #x+1,y
+        #x+1,y+1
+        
+        #x,y+1
+        #x,y-1
+        
+        #x-1,y-1
+        #x-1,y
+        #x-1,y+1
+        
         #if(self.corpo[x+1,y])
-        print (self.fimx)
+        #print (self.fimx)
+        #self.vetorAberto.append([3,2,1,12])
+        temp = self.verificarVetorAberto(x,y)
+        print (temp)
 
-    #def verificarVetorAberto(x,y):
-        
-
+    def verificarExistenciaVetorAberto(self,x,y):
+        for i in self.vetorAberto:
+            if((i[0] == x) and (i[1] == y)):
+                return True
+        return False
+    
+    def verificarExistenciaVetorFechado(self,x,y):
+        for i in self.vetorFechado:
+            if((i[0] == x) and (i[1] == y)):
+                return True
+        return False 
+    
 
 
 #-------------------corpo principal!-----------------------------
@@ -39,7 +62,8 @@ final = [7,0]
 
 
 chamada = buscar_labirinto(corpo, inicio, final)
-                           
+
+chamada.verNovosVizinhos(3, 3)                        
 
 
 
