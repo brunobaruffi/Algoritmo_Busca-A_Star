@@ -98,8 +98,14 @@ class buscar_labirinto:
         semVizinho = False
         vetorControle = []
         posControle = 0
+        
+        #verificar se vizinhos e vetorAberto estão vazios, indicando algo sem solução
+        if((len(vizinhos) == 0) and (len(self.vetorAberto) == 0)):
+            print("SEM SOLUÇÃO")
+            return False
+        
         #Rodar todos os vizinhos enviados, adicionar no vetorControle 
-        #validando a distanca.
+        #validando a distanca.        
         c=0
         for i in vizinhos:
             tempDistancia = self.verificarDistanciaXY(i[0],i[1],self.fimx,self.fimy)
@@ -133,7 +139,9 @@ class buscar_labirinto:
         self.vetorFechado.append(addVetorFechado[0])
         for i in vetorControle:
             self.vetorAberto.append(i)
-            
+        
+        return True
+        
     def buscarCaminho(self):
         self.vetorFechado.append([self.iniciox, self.inicioy, 0, self.verificarDistanciaXY(self.iniciox, self.inicioy, self.fimx, self.fimy)])
         saida = 0
@@ -146,17 +154,16 @@ class buscar_labirinto:
                 posisaoVetorFechado = len(self.vetorFechado) - 1
                 vizinhos = self.verNovosVizinhos(x, y)
                 
-                self.avaliarVizinhosEVetorAbarto(vizinhos,posisaoVetorFechado)
+                status = self.avaliarVizinhosEVetorAbarto(vizinhos,posisaoVetorFechado)
                 
-                if(self.vetorFechado[-1][3] > 0):
+                if((self.vetorFechado[-1][3] > 0) and (status == True)):
                     saida = 0
                 else:
                     saida = 1
         
         self.gerarCaminhoFinal()
         self.gerarGrafico()
-
-        
+      
     def gerarCaminhoFinal(self):
        fechado = self.vetorFechado
        fechado.reverse()
@@ -204,8 +211,8 @@ class buscar_labirinto:
 #Vetor corpo composto pela distancia e um vetor dos vizinhos.
 corpo = [  # 0,1,2,3,4,5,6,7
             [1,1,1,1,0,1,1,1], # 0
-            [1,0,0,0,0,1,1,1], # 1
-            [1,1,1,1,0,1,1,1], # 2
+            [1,1,1,1,0,1,1,1], # 1
+            [1,0,0,0,0,1,1,1], # 2
             [1,1,1,1,1,1,1,1]  # 3
         ]
 #Tamanho de x,y(linhas e colunas)
@@ -217,6 +224,6 @@ final = [0,7]
 
 chamada = buscar_labirinto(corpo, inicio, final, tamanho)
 chamada.buscarCaminho()
-print(chamada.vetorCaminhoFinal)
+#print(chamada.vetorCaminhoFinal)
 #print(chamada.vetorFechado)
 #print(chamada.vetorAberto)
