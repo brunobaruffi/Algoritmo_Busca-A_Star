@@ -1,6 +1,13 @@
 import math
 import matplotlib.pyplot as plt
 
+class vetorPadrao:
+    def __init__(self, X,Y,Anterior, Distancia):
+        self.X = X
+        self.Y = Y
+        self.Anterior = Anterior
+        self.Distancia = Distancia
+
 class buscar_labirinto:
     
     def __init__(self, corpo, inicio, fim, tamanho):
@@ -73,14 +80,14 @@ class buscar_labirinto:
     def verificarExistenciaVetorAberto(self,x,y):
         #Roda o vetor aberto conferindo se o x,y esta la
         for i in self.vetorAberto:
-            if((i[0] == x) and (i[1] == y)):
+            if((i.X == x) and (i.Y == y)):
                 return True
         return False
     
     def verificarExistenciaVetorFechado(self,x,y):
         #Roda o vetor fechado conferindo se o x,y esta la
         for i in self.vetorFechado:
-            if((i[0] == x) and (i[1] == y)):
+            if((i.X == x) and (i.Y == y)):
                 return True
         return False 
     
@@ -109,7 +116,7 @@ class buscar_labirinto:
         c=0
         for i in vizinhos:
             tempDistancia = self.verificarDistanciaXY(i[0],i[1],self.fimx,self.fimy)
-            vetorControle.append([i[0],i[1],posisaoVetorFechado,tempDistancia])
+            vetorControle.append(vetorPadrao(i[0],i[1],posisaoVetorFechado,tempDistancia))
             
             if (c == 0):
                Controle = tempDistancia
@@ -121,9 +128,9 @@ class buscar_labirinto:
         #Validando o vetorAberto, buscando o mais proximo deles
         c=0
         for i in self.vetorAberto:
-            if (i[3] < Controle):
+            if (i.Distancia < Controle):
                 semVizinho = True
-                Controle = i[3]
+                Controle = i.Distancia
                 posControle = c
             c = c + 1 
         
@@ -143,20 +150,21 @@ class buscar_labirinto:
         return True
         
     def buscarCaminho(self):
-        self.vetorFechado.append([self.iniciox, self.inicioy, 0, self.verificarDistanciaXY(self.iniciox, self.inicioy, self.fimx, self.fimy)])
+        self.vetorFechado.append(vetorPadrao(self.iniciox, self.inicioy, 0, self.verificarDistanciaXY(self.iniciox, self.inicioy, self.fimx, self.fimy)))
         saida = 0
         while saida == 0:
             if (self.vetorFechado == 0):
                 saida = 1
             else:
-                x = self.vetorFechado[-1][0]
-                y = self.vetorFechado[-1][1]
+                print(self.vetorFechado[-1].Distancia)
+                x = self.vetorFechado[-1].X
+                y = self.vetorFechado[-1].Y
                 posisaoVetorFechado = len(self.vetorFechado) - 1
                 vizinhos = self.verNovosVizinhos(x, y)
                 
                 status = self.avaliarVizinhosEVetorAbarto(vizinhos,posisaoVetorFechado)
                 
-                if((self.vetorFechado[-1][3] > 0) and (status == True)):
+                if((self.vetorFechado[-1].Distancia > 0) and (status == True)):
                     saida = 0
                 else:
                     saida = 1
@@ -171,16 +179,16 @@ class buscar_labirinto:
        c=0
        for i in fechado:
           if(c==0):
-              self.vetorCaminhoFinal.append([i[0],i[1],i[2],i[3]])
+              self.vetorCaminhoFinal.append(vetorPadrao(i.X,i.Y,i.Anterior,i.Distancia))
           else:
-              if(i[2] != 0):
-                  self.vetorCaminhoFinal.append([i[0],i[1],i[2],i[3]])
+              if(i.Anterior != 0):
+                  self.vetorCaminhoFinal.append(vetorPadrao(i.X,i.Y,i.Anterior,i.Distancia))
               else:
-                  self.vetorCaminhoFinal.append([i[0],i[1],i[2],i[3]])
+                  self.vetorCaminhoFinal.append(vetorPadrao(i.X,i.Y,i.Anterior,i.Distancia))
                   break
           c = c + 1
        fechado.reverse()
-       self.vetorCaminhoFinal.append([fechado[0][0],fechado[0][1],fechado[0][2],fechado[0][3]])   
+       self.vetorCaminhoFinal.append(vetorPadrao(fechado[0].X,fechado[0].Y,fechado[0].Anterior,fechado[0].Distancia))   
        self.vetorCaminhoFinal.reverse()
        
     def gerarGrafico(self):
@@ -188,7 +196,7 @@ class buscar_labirinto:
         plt.ylim(0,self.tamanhoX + 2)
         corpo = self.corpo
         for i in self.vetorCaminhoFinal:
-            corpo[i[0]][i[1]] = "X"
+            corpo[i.X][i.Y] = "X"
             
         c=1
         corpo.reverse()
@@ -211,8 +219,8 @@ class buscar_labirinto:
 #Vetor corpo composto pela distancia e um vetor dos vizinhos.
 corpo = [  # 0,1,2,3,4,5,6,7
             [1,1,1,1,0,1,1,1], # 0
-            [1,1,1,1,0,1,1,1], # 1
-            [1,0,0,0,0,1,1,1], # 2
+            [1,0,0,0,0,1,1,1], # 1
+            [1,1,1,1,0,1,1,1], # 2
             [1,1,1,1,1,1,1,1]  # 3
         ]
 #Tamanho de x,y(linhas e colunas)
