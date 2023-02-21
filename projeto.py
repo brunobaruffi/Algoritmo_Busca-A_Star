@@ -1,4 +1,5 @@
 import math
+import matplotlib.pyplot as plt
 
 class buscar_labirinto:
     
@@ -12,11 +13,7 @@ class buscar_labirinto:
         self.tamanhoY = tamanho[1]  #colunas
         self.vetorFechado = []
         self.vetorAberto = []
-                
-        #self.vetorAberto.append([3,2,1,2])
-        #self.vetorFechado.append([2,2,1,12])
-
-
+        self.vetorCaminhoFinal = []
 
     def verNovosVizinhos(self, x, y):
         saida = []
@@ -124,10 +121,7 @@ class buscar_labirinto:
                 posControle = c
             c = c + 1 
         
-        #print(posControle)
-        #print(semVizinho)
-        #print(Controle)
-        
+        #redefinição dos vetores aberto e fechado
         addVetorFechado = []
         if(semVizinho == True):
             addVetorFechado.append(self.vetorAberto[posControle])
@@ -140,10 +134,6 @@ class buscar_labirinto:
         for i in vetorControle:
             self.vetorAberto.append(i)
             
-        #print(self.vetorFechado)
-        #print(self.vetorAberto)        
-        
-           
     def buscarCaminho(self):
         self.vetorFechado.append([self.iniciox, self.inicioy, 0, self.verificarDistanciaXY(self.iniciox, self.inicioy, self.fimx, self.fimy)])
         saida = 0
@@ -162,10 +152,53 @@ class buscar_labirinto:
                     saida = 0
                 else:
                     saida = 1
-                
-        #print(self.vetorFechado)
-        #print(self.vetorAberto)
         
+        self.gerarCaminhoFinal()
+        self.gerarGrafico()
+
+        
+    def gerarCaminhoFinal(self):
+       fechado = self.vetorFechado
+       fechado.reverse()
+       self.vetorCaminhoFinal.clear()
+       c=0
+       for i in fechado:
+          if(c==0):
+              self.vetorCaminhoFinal.append([i[0],i[1],i[2],i[3]])
+          else:
+              if(i[2] != 0):
+                  self.vetorCaminhoFinal.append([i[0],i[1],i[2],i[3]])
+              else:
+                  self.vetorCaminhoFinal.append([i[0],i[1],i[2],i[3]])
+                  break
+          c = c + 1
+       fechado.reverse()
+       self.vetorCaminhoFinal.append([fechado[0][0],fechado[0][1],fechado[0][2],fechado[0][3]])   
+       self.vetorCaminhoFinal.reverse()
+       
+    def gerarGrafico(self):
+        plt.xlim(0,self.tamanhoY + 2)
+        plt.ylim(0,self.tamanhoX + 2)
+        corpo = self.corpo
+        for i in self.vetorCaminhoFinal:
+            corpo[i[0]][i[1]] = "X"
+            
+        c=1
+        corpo.reverse()
+        for i in corpo:
+            d=1
+            for j in i:
+                if(j == 1):
+                    cor = 'blue'
+                elif(j == 0):
+                    cor = 'grey'
+                elif(j == "X"):
+                    cor = 'green'
+                plt.text(d, c, j, backgroundcolor=cor)
+                d= d + 1
+            c = c + 1
+        plt.show()
+            
 #-------------------corpo principal!-----------------------------
 
 #Vetor corpo composto pela distancia e um vetor dos vizinhos.
@@ -182,11 +215,8 @@ inicio = [0,0]
 #indica o ponto final de chegada
 final = [0,7]
 
-
 chamada = buscar_labirinto(corpo, inicio, final, tamanho)
-
-#print(chamada.verNovosVizinhos(2, 3))
-
-#print(chamada.verificarDistanciaXY(0, 0, 3, 4))
-
 chamada.buscarCaminho()
+print(chamada.vetorCaminhoFinal)
+#print(chamada.vetorFechado)
+#print(chamada.vetorAberto)
