@@ -156,7 +156,7 @@ class buscar_labirinto:
             if (self.vetorFechado == 0):
                 saida = 1
             else:
-                print(self.vetorFechado[-1].Distancia)
+                #print(self.vetorFechado[-1].Distancia)
                 x = self.vetorFechado[-1].X
                 y = self.vetorFechado[-1].Y
                 posisaoVetorFechado = len(self.vetorFechado) - 1
@@ -192,6 +192,10 @@ class buscar_labirinto:
        self.vetorCaminhoFinal.reverse()
        
     def gerarGrafico(self):
+        
+        #for i in self.vetorAberto:
+            #print(i.X , "," , i.Y, " - " , i.Anterior, " - " , i.Distancia)
+        
         plt.xlim(0,self.tamanhoY + 2)
         plt.ylim(0,self.tamanhoX + 2)
         corpo = self.corpo
