@@ -1,4 +1,5 @@
-#Encontrar caminho no labirinto baseando-se em Busca A Star
+<h1>Encontrar caminho no labirinto baseando-se em Busca A Star</h1>
+<hr>
 
 O codigo acima funciona utilizando busca A* visando encontrar o caminho em um labirinto binario declarado no codigo. 
 
