@@ -172,29 +172,24 @@ class buscar_labirinto:
         self.gerarCaminhoFinal()
         self.gerarGrafico()
       
-    def gerarCaminhoFinal(self):
-       fechado = self.vetorFechado
-       fechado.reverse()
-       self.vetorCaminhoFinal.clear()
-       c=0
-       for i in fechado:
-          if(c==0):
-              self.vetorCaminhoFinal.append(vetorPadrao(i.X,i.Y,i.Anterior,i.Distancia))
-          else:
-              if(i.Anterior != 0):
-                  self.vetorCaminhoFinal.append(vetorPadrao(i.X,i.Y,i.Anterior,i.Distancia))
-              else:
-                  self.vetorCaminhoFinal.append(vetorPadrao(i.X,i.Y,i.Anterior,i.Distancia))
-                  break
-          c = c + 1
-       fechado.reverse()
-       self.vetorCaminhoFinal.append(vetorPadrao(fechado[0].X,fechado[0].Y,fechado[0].Anterior,fechado[0].Distancia))   
-       self.vetorCaminhoFinal.reverse()
        
+    def gerarCaminhoFinal(self):
+        controle = -1
+        self.vetorCaminhoFinal.clear();
+        while controle != 0:
+            if(controle == -1):
+                self.vetorCaminhoFinal.append(self.vetorFechado[len(self.vetorFechado)-1])
+                controle = self.vetorFechado[len(self.vetorFechado)-1].Anterior
+            else:
+                self.vetorCaminhoFinal.append(self.vetorFechado[controle])
+                controle = self.vetorFechado[controle].Anterior
+        
+        self.vetorCaminhoFinal.append(self.vetorFechado[0])
+            
     def gerarGrafico(self):
         
-        #for i in self.vetorAberto:
-            #print(i.X , "," , i.Y, " - " , i.Anterior, " - " , i.Distancia)
+        #for i in self.vetorCaminhoFinal:
+         #   print(i.X , "," , i.Y, " - " , i.Anterior, " - " , i.Distancia)
         
         plt.xlim(0,self.tamanhoY + 2)
         plt.ylim(0,self.tamanhoX + 2)
@@ -222,9 +217,9 @@ class buscar_labirinto:
 
 #Vetor corpo composto pela distancia e um vetor dos vizinhos.
 corpo = [  # 0,1,2,3,4,5,6,7
-            [1,1,1,1,0,1,1,1], # 0
-            [1,0,0,0,0,1,1,1], # 1
-            [1,1,1,1,0,1,1,1], # 2
+            [1,1,1,1,1,1,0,1], # 0
+            [1,1,0,1,0,0,0,1], # 1
+            [1,1,1,1,1,1,0,1], # 2
             [1,1,1,1,1,1,1,1]  # 3
         ]
 #Tamanho de x,y(linhas e colunas)
